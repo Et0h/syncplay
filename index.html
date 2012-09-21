@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Syncplay by Uriziel</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Syncplay</h1>
+        <p>client/server to synchronize watching movies on mplayer/mpc on many computers</p>
+
+        <p class="view"><a href="https://github.com/Uriziel/syncplay">View the Project on GitHub <small>Uriziel/syncplay</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/Uriziel/syncplay/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Uriziel/syncplay/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Uriziel/syncplay">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>SyncPlay</h1>
+
+<p>Solution to synchronize video playback across many instances of mplayer and Media Player Classic (MPC-HC) over the network.</p>
+
+<h2>Motivation</h2>
+
+<ol>
+<li>Watching videos with friends and commenting them live on IRC or Mumble</li>
+<li>Do something for lulz and to learn new stuff</li>
+</ol><h2>What does it do</h2>
+
+<p>It synchronizes many media players, so many people can watch the same movie at the same moment.
+When one person pauses playback, it gets paused in all players. When one person seeks,
+all players seek to the same position. When new person joins to the watching session which
+runs for a while, his player starts playback at the moment where other people are.</p>
+
+<h2>Requirements</h2>
+
+<p>All you need is Python 2.7 and Twisted to run python scripts.</p>
+
+<h3>Windows</h3>
+
+<p>Because setting up Python and installing requirements under Windows is a bit hard,
+I'll provide download links to "ready to use" package when it gets stable.</p>
+
+<p>If you still want to run it from sources, apart from Python and Twisted you'll
+probably need to instal manually setuptools and zope.interface packages. Additionaly
+you can install py2exe to make "all in one" redistributable package.</p>
+
+<h2>Supported players</h2>
+
+<h3>Mplayer</h3>
+
+<p><code>sync_mplayer</code> acts as a wrapper for mplayer. First two arguments are host and nickname.
+The rest are arguments to be given to mplayer (at least filename). It launches mplayer
+which behaves just like normal (it reacts to keyboard shortcuts etc).</p>
+
+<p>Default mplayer output is suppressed, but if mplayer quits with errors, those errors
+will be printed (at most 50 last lines).</p>
+
+<h3>Media Player Classic Home Cinema (MPC-HC)</h3>
+
+<p><code>sync_mpc</code> connects to MPC via its Web Interface. You need to enable it first in settings
+(check "Listen on port" with default port which is 13579 and to be more secure check
+"Allow access from localhost only"). You need to run MPC and open the file first, then launch syncplay.</p>
+
+<p>You need to provide two argument to <code>sync_mpc</code>: hostname to conect to and nickname.
+If hostname and nickname doesn not change, you can create shortcut to executable somewhere, edit it
+and append those two arguments to command.</p>
+
+<h2>How to use it</h2>
+
+<p>You need to run <code>run_sync_server</code> somewhere. If you have public IP, you can try to launch server on your computer
+and give your friends your IP number, so they can connect to it. It will listen at port 8999, you
+might need to allow connections to it in your firewall/router.</p>
+
+<p>Then you launch player synchronization. When it connects and doesn't print errors about player, you are ready.
+When all interested people join, you can just unpause in and it will just start to play everywhere.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/Uriziel">Uriziel</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
