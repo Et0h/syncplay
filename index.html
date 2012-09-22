@@ -4,95 +4,195 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Syncplay by Uriziel</title>
-
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
     <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/Uriziel/syncplay">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/Uriziel/syncplay/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/Uriziel/syncplay/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
+
     <div class="wrapper">
-      <header>
-        <h1>Syncplay</h1>
-        <p>client/server to synchronize watching movies on mplayer/mpc on many computers</p>
 
-        <p class="view"><a href="https://github.com/Uriziel/syncplay">View the Project on GitHub <small>Uriziel/syncplay</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/Uriziel/syncplay/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/Uriziel/syncplay/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/Uriziel/syncplay">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
       <section>
-        <h1>SyncPlay</h1>
+        <div id="title">
+          <h1>Syncplay</h1>
+          <p> Solution to synchronize video playback across multiple instances of MPlayer and/or Media Player Classic (MPC-HC) over the Internet.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/Uriziel">Uriziel</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></span>
+        </div>
 
-<p>Solution to synchronize video playback across many instances of mplayer and Media Player Classic (MPC-HC) over the network.</p>
+        <h1>Syncplay</h1>
 
-<h2>Motivation</h2>
+<p>Solution to synchronize video playback across multiple instances of MPlayer and/or Media Player Classic (MPC-HC) over the Internet.</p>
 
-<ol>
-<li>Watching videos with friends and commenting them live on IRC or Mumble</li>
-<li>Do something for lulz and to learn new stuff</li>
-</ol><h2>What does it do</h2>
+<h2>What does it do</h2>
 
-<p>It synchronizes many media players, so many people can watch the same movie at the same moment.
-When one person pauses playback, it gets paused in all players. When one person seeks,
-all players seek to the same position. When new person joins to the watching session which
-runs for a while, his player starts playback at the moment where other people are.</p>
+<p>Syncplay synchronises the position and play state of multiple media players so that the viewers can watch the same thing at the same time.
+When one person pauses playback, the media player is paused for all users who are connected to the same server and are in the same 'room' (viewing session).
+When one person seeks, all players seek to the same position. When a new person joins they will be synchronised with their fellow viewers.</p>
+
+<h2>What does it not do</h2>
+
+<p>Syncplay does not provide video streaming, nor does it synchronise player configuration, selected audio or subtitle track, playback rate, volume or filters. Furthermore, the user must manually choose what file to play as Syncplay does not synchronise which file is open. Finally, Syncplay does not provide a voice or text-based chat platform to allow for discussion during playback as Syncplay is intended to be used in conjunction with third-party communication software such as IRC, Mumble or Skype.</p>
 
 <h2>Requirements</h2>
 
-<p>All you need is Python 2.7 and Twisted to run python scripts.</p>
+<p>Frozen Windows executables are available on download page - <a href="https://github.com/Uriziel/syncplay/downloads">https://github.com/Uriziel/syncplay/downloads</a></p>
 
-<h3>Windows</h3>
+<p>On Windows: <code>Media Player Classic - Home Cinema (MPC-HC)</code> &gt;= <code>1.6.3</code>.</p>
 
-<p>Because setting up Python and installing requirements under Windows is a bit hard,
-I'll provide download links to "ready to use" package when it gets stable.</p>
+<p>On Linux: <code>mplayer</code> &gt;= <code>1.1</code>.</p>
 
-<p>If you still want to run it from sources, apart from Python and Twisted you'll
-probably need to instal manually setuptools and zope.interface packages. Additionaly
-you can install py2exe to make "all in one" redistributable package.</p>
+<p>For running python script you need (not needed if using frozen executable package from download page):</p>
+
+<p><code>pygtk</code> &gt;= <code>2.0.0</code> (unless started with <code>--no-gui</code>)</p>
+
+<p><code>argparse</code> &gt;= <code>1.1</code></p>
+
+<p><code>pywin32</code> &gt;= <code>r217</code> (mpc-hc, Windows only)</p>
+
+<p><code>twisted</code> &gt;= <code>12.1.0</code></p>
 
 <h2>Supported players</h2>
 
-<h3>Mplayer</h3>
+<h3>MPlayer on Linux</h3>
 
-<p><code>sync_mplayer</code> acts as a wrapper for mplayer. First two arguments are host and nickname.
-The rest are arguments to be given to mplayer (at least filename). It launches mplayer
-which behaves just like normal (it reacts to keyboard shortcuts etc).</p>
+<p>On Linux <code>syncplayClient.py</code> acts as a wrapper for MPlayer. 
+You're expected to pass filename as the first positional argument, if you wish to pass more arguments to mplayer prepend them with -- argument, it's treated as the last argument for wrapper.
+It launches mplayer which behaves just like normal (it reacts to keyboard shortcuts etc).</p>
 
-<p>Default mplayer output is suppressed, but if mplayer quits with errors, those errors
-will be printed (at most 50 last lines).</p>
+<p>Default mplayer output is suppressed, but if mplayer quits with errors, those errors will be printed (at most 50 last lines).</p>
 
-<h3>Media Player Classic Home Cinema (MPC-HC)</h3>
+<h3>Media Player Classic Home Cinema (MPC-HC) on Windows</h3>
 
-<p><code>sync_mpc</code> connects to MPC via its Web Interface. You need to enable it first in settings
-(check "Listen on port" with default port which is 13579 and to be more secure check
-"Allow access from localhost only"). You need to run MPC and open the file first, then launch syncplay.</p>
+<p>On Windows simply running <code>syncplayClient.exe</code> opens a Syncplay command-line window for communication and a new instance of MPC-HC for synchronised video playback. This instance of MPC-HC is controlled by Syncplay through the associated command-line window, but other instances of MPC-HC will be unaffected.</p>
 
-<p>You need to provide two argument to <code>sync_mpc</code>: hostname to conect to and nickname.
-If hostname and nickname doesn not change, you can create shortcut to executable somewhere, edit it
-and append those two arguments to command.</p>
+<h2>Using Syncplay</h2>
 
-<h2>How to use it</h2>
+<h3>Opening a media file with Syncplay</h3>
 
-<p>You need to run <code>run_sync_server</code> somewhere. If you have public IP, you can try to launch server on your computer
-and give your friends your IP number, so they can connect to it. It will listen at port 8999, you
+<p>If you open a file with <code>syncplayClient</code> then it will automatically open Syncplay and load the file through MPC-HC on Windows and MPlayer on Linux.</p>
+
+<h3>Configuration window</h3>
+
+<p>The configuration window allows for various settings to be configured prior to Syncplay starting.</p>
+
+<p>The window will appear if you:</p>
+
+<ol>
+<li><p>Run <code>syncplayClient</code>  without settings being configured, e.g. on first boot,</p></li>
+<li><p>Run <code>syncplayClient</code> with the <code>--force-gui-prompt</code> or <code>-g</code> commandline switches, or</p></li>
+<li><p>Run <code>syncplayClientForceConfiguration</code>.</p></li>
+</ol><p>The settings to be configured are as follows:</p>
+
+<p><code>Host</code> - Address (hostname / IP) of server to connect to (optionally with port), e.g. <code>localhost:2734</code> or <code>192.168.0.1</code>. Default port is <code>8999</code>.</p>
+
+<p><code>Username</code> - Name that the server and other viewers know you by.</p>
+
+<p><code>Default room (optional)</code> - Room to join upon connection. You will only be synchronised with others in the same room on the same server. Default room is <code>default</code>.</p>
+
+<p><code>Server password (optional)</code> - Password for server. Servers that are not password protected have a blank password.</p>
+
+<p><code>Path to mpc-hc.exe [Windows only]</code> - Location of the MPC-HC executable (mpc-hc.exe or mpc-hc64.exe). If this is in a common location then it will be filled in by default. Users are adviced to check it though, if it's chosen their desired installation.</p>
+
+<p>Pressing "Save" will save the settings and continue Syncplay start-up.</p>
+
+<h3>Syncplay Commands</h3>
+
+<p>Within the Syncplay command-line you can enter the following commands (and then press enter) to access features:</p>
+
+<p><code>help</code> - Displays list of commands and other information.</p>
+
+<p><code>room [room]</code> - Leaves current room and joins specified room. You are only synchronised with others in the same room on the same server. If no room is specified then it will use the filename of the currently playing file, or alternatively will join the default room if no file is playing.</p>
+
+<p><code>s [time]</code> - Seek (jump) to specified time. Can be <code>seconds</code>, <code>minutes:seconds</code> or <code>hours:minutes:seconds</code>.</p>
+
+<p><code>s+ [time]</code> - Jumps [time] forward. Can be <code>seconds</code>, <code>minutes:seconds</code> or <code>hours:minutes:seconds</code>.</p>
+
+<p><code>r</code> - Revert last seek. Seeks to where you were before the most recent seek.</p>
+
+<p><code>p</code> - Toggle play/pause.</p>
+
+<h3>Instructions on how to use Syncplay for the first time</h3>
+
+<ol>
+<li><p>Ensure that you have the latest version of MPC-HC on Windows or MPlayer on Linux.</p></li>
+<li><p>Download Syncplay from <a href="https://github.com/Uriziel/syncplay/downloads">https://github.com/Uriziel/syncplay/downloads</a> and extract to a folder of your choosing.</p></li>
+<li><p>If you are running your own server then open <code>syncplayServer</code> (see "How to use the server", below)</p></li>
+<li><p>Open <code>syncplayClient</code> (or open the media file you wish to play with <code>syncplayClient</code>, e.g. using "Open with")</p></li>
+<li><p>Enter configuration settings (see "Configuration window", above).</p></li>
+<li><p>If your fellow viewers are not in the same 'room' as you then use the room command (see "Syncplay Commands", above)</p></li>
+<li><p>If you don't have the file you want to play open in your media player then open it from within your media player.</p></li>
+</ol><h3>Command-line switches</h3>
+
+<p>You can run <code>syncplayClient</code> with the following command-line switches to alter Syncplay settings or behaviour:</p>
+
+<p><code>--no-gui</code> - Do not display graphical user interface (GUI)</p>
+
+<p><code>--host [address]</code> - Specify address of server to connect to (can be address:port)</p>
+
+<p><code>--name [name]</code> / <code>-n [name]</code> - Specify username to use</p>
+
+<p><code>--debug</code> / <code>-d</code> - Enable debug mode</p>
+
+<p><code>--force-gui-prompt</code> / <code>-g</code> - Force the configuration window to appear when Syncplay starts</p>
+
+<p><code>--no-store</code> - Disable the storing of configuration data (in .syncplay file)</p>
+
+<p><code>--room [room]</code> / <code>-r [room]</code> - Specify default room to join upon connection.</p>
+
+<p><code>--password [password]</code> / <code>-p [password]</code> - Specify server password</p>
+
+<p><code>[file]</code> - File to play upon start</p>
+
+<p><code>--</code> - used as a last argument for syncplayClient, used to prepend arguments that are meant to be passed to player</p>
+
+<h3>Error messages and notifications</h3>
+
+<p><code>Rewinded due to time difference</code> - This means that your media player ended up too far in front of at least one other viewer and has jumped back to keep you in sync. This is usually because someone's computer isn't powerful enough to play the file smoothly.</p>
+
+<h2>How to use the server</h2>
+
+<p>You need to run <code>syncplayServer</code>. If you have a public IP then you can try to launch server on your computer
+and give your friends your IP number, so they can connect to it. It will listen at port <code>8999</code>, unless stated otherwise, you
 might need to allow connections to it in your firewall/router.</p>
 
-<p>Then you launch player synchronization. When it connects and doesn't print errors about player, you are ready.
-When all interested people join, you can just unpause in and it will just start to play everywhere.</p>
+<p>Pass the IP or hostname to people you want to watch with and you're ready to go.</p>
+
+<h3>Server command-line switches</h3>
+
+<p><code>--port [port]</code> - use stated port instead of the default one.</p>
+
+<p><code>--isolate-room</code> - if stated you won't be able to see users in rooms different for your.</p>
+
+<p><code>--password</code> - server password used for private servers.</p>
+
+<h2>How to report bugs</h2>
+
+<p>You can report bugs through <a href="https://github.com/Uriziel/syncplay/issues">https://github.com/Uriziel/syncplay/issues</a> but first please check to see if your problem has already been reported.</p>
+
+<p>You might also be able to discuss your problem through Internet Relay Chat (IRC). The #Syncplay channel is on the irc.rizon.net server.</p>
       </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/Uriziel">Uriziel</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
   </body>
 </html>
